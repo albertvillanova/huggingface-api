@@ -5,6 +5,112 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
+@app.get("/whoami-v2")
+async def whoami(
+    token: Union[bool, str, None] = None,
+):
+    return {"token": token}
+
+
+@app.get("/{repo_type}s-tags-by-type")
+async def list_repo_tags_by_type(
+    repo_type: str,
+):
+    return {"repo_type": repo_type}
+
+
+@app.get("/models")
+async def list_models(
+    token: Union[str, bool, None] = None,
+):
+    return {"token": token}
+
+
+@app.get("/datasets")
+async def list_datasets(
+    token: Union[str, bool, None] = None,
+):
+    return {"token": token}
+
+
+@app.get("/metrics")
+async def list_metrics(
+    token: Union[str, bool, None] = None,
+):
+    return {"token": token}
+
+
+@app.get("/spaces")
+async def list_spaces(
+    token: Union[str, bool, None] = None,
+):
+    return {"token": token}
+
+
+@app.post("/{repo_type}s/{repo_id}/like")
+async def like_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.delete("/{repo_type}s/{repo_id}/like")
+async def unlike_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+app.get("/users/{user}/likes")
+async def list_user_likes(
+    user: str,
+    token: Union[str, bool, None] = None,
+):
+    return {"user": user, "token": token}
+
+
+app.get("{repo_type}s/{repo_id}/likers")
+async def list_repo_likers(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.get("/{repo_type}s/{repo_id}")
+async def read_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
 @app.get("/{repo_type}s/{repo_id}/commits/{revision}")
 async def list_repo_commits(
     repo_id: str,
@@ -56,6 +162,425 @@ async def list_repo_tree(
         "recursive": recursive,
         "expand": expand,
         "revision": revision,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/paths-info/{revision}")
+async def list_repo_paths_info(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    revision: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "revision": revision,
+        "token": token,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/super-squash/{branch}")
+async def super_squash(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    branch: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "branch": branch,
+        "token": token,
+    }
+
+
+@app.post("/repos/create")
+async def create_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    exist_ok: bool = False,
+    private: bool = False,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+        "exist_ok": exist_ok,
+        "private": private,
+    }
+
+
+@app.delete("/repos/delete")
+async def delete_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    missing_ok: bool = False,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+        "missing_ok": missing_ok,
+    }
+
+
+@app.put("/{repo_type}s/{repo_id}/settings")
+async def update_repo_settings(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.post("/repos/move")
+async def move_repo(
+    from_repo_id: str,
+    to_repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "from_repo_id": from_repo_id,
+        "to_repo_id": to_repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+@app.post("/{repo_type}s/{repo_id}/commit/{revision}")
+async def commit_repo(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    revision: Optional[str] = None,
+    message: Optional[str] = None,
+    description: Optional[str] = None,
+    create_pr: Optional[bool] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+        "revision": revision,
+        "message": message,
+        "description": description,
+        "create_pr": create_pr,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/branch/{branch}")
+async def create_branch(
+    repo_id: str,
+    branch: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    exist_ok: bool = False,
+):
+    return {
+        "repo_id": repo_id,
+        "branch": branch,
+        "repo_type": repo_type,
+        "token": token,
+        "exist_ok": exist_ok,
+    }
+
+
+@app.delete("/{repo_type}s/{repo_id}/branch/{branch}")
+async def delete_branch(
+    repo_id: str,
+    branch: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    # missing_ok: bool = False,
+):
+    return {
+        "repo_id": repo_id,
+        "branch": branch,
+        "repo_type": repo_type,
+        "token": token,
+        # "missing_ok": missing_ok,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/tag/{revision}")
+async def create_tag(
+    repo_id: str,
+    revision: str,
+    tag: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "revision": revision,
+        "repo_type": repo_type,
+        "token": token,
+        "tag": tag,
+    }
+
+
+@app.delete("/{repo_type}s/{repo_id}/tag/{tag}")
+async def delete_tag(
+    repo_id: str,
+    tag: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "tag": tag,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.get("/{repo_type}s/{repo_id}/discussions")
+async def list_discussions(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/discussions")
+async def create_discussion(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+    title: Optional[str] = None,
+    description: Optional[str] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "token": token,
+        "title": title,
+        "description": description,
+    }
+
+
+@app.get("/{repo_type}s/{repo_id}/discussions/{discussion_num}")
+async def get_discussion(
+    repo_id: str,
+    discussion_num: int,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "discussion_num": discussion_num,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.post("/{repo_type}s/{repo_id}/discussions/{discussion_num}/{resource}")
+async def update_discussion_resource(
+    repo_id: str,
+    discussion_num: int,
+    resource: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "discussion_num": discussion_num,
+        "resource": resource,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.post("/spaces/{repo_id}/secrets")
+async def create_space_secret(
+    repo_id: str,
+    key: str,
+    value: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "key": key,
+        "value": value,
+    }
+
+
+@app.delete("/spaces/{repo_id}/secrets")
+async def delete_space_secret(
+    repo_id: str,
+    key: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "key": key,
+    }
+
+
+@app.get("/spaces/{repo_id}/variables")
+async def list_space_variables(
+    repo_id: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+
+@app.post("/spaces/{repo_id}/variables")
+async def create_space_variable(
+    repo_id: str,
+    key: str,
+    value: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "key": key,
+        "value": value,
+    }
+
+
+@app.delete("/spaces/{repo_id}/variables")
+async def delete_space_variable(
+    repo_id: str,
+    key: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "key": key,
+    }
+
+
+@app.get("/spaces/{repo_id}/runtime")
+async def get_space_runtime(
+    repo_id: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+
+@app.post("/spaces/{repo_id}/hardware")
+async def create_space_hardware(
+    repo_id: str,
+    hardware: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "hardware": hardware,
+    }
+
+
+@app.post("/spaces/{repo_id}/sleeptime")
+async def set_space_sleep_time(
+    repo_id: str,
+    seconds: int,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "seconds": seconds,
+    }
+
+
+@app.post("/spaces/{repo_id}/pause")
+async def pause_space(
+    repo_id: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+
+@app.post("/spaces/{repo_id}/restart")
+async def restart_space(
+    repo_id: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+# TODO
+
+
+@app.post("/validate-yaml")
+async def validate_yaml(
+    content: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "content": content,
+        "repo_type": repo_type,
+        "token": token,
+    }
+
+
+@app.get("/{repo_type}s/{repo_id}/auth-check")
+async def check_repo_auth(
+    repo_id: str,
+    *,
+    repo_type: Optional[str] = None,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
         "repo_type": repo_type,
         "token": token,
     }
