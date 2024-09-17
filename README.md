@@ -12,7 +12,7 @@ pip install "fastapi[standard]"
 
 ```shell
 source .venv/bin/activate
-fastapi dev main.py
+fastapi dev app/main.py
 ```
 
 - API: http://127.0.0.1:8000
