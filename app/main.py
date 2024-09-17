@@ -2,6 +2,8 @@ from typing import Optional, Union
 
 from fastapi import FastAPI
 
+from .routers import spaces
+
 app = FastAPI()
 
 
@@ -420,144 +422,6 @@ async def update_discussion_resource(
     }
 
 
-@app.post("/spaces/{repo_id}/secrets")
-async def create_space_secret(
-    repo_id: str,
-    key: str,
-    value: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "key": key,
-        "value": value,
-    }
-
-
-@app.delete("/spaces/{repo_id}/secrets")
-async def delete_space_secret(
-    repo_id: str,
-    key: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "key": key,
-    }
-
-
-@app.get("/spaces/{repo_id}/variables")
-async def list_space_variables(
-    repo_id: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-    }
-
-
-@app.post("/spaces/{repo_id}/variables")
-async def create_space_variable(
-    repo_id: str,
-    key: str,
-    value: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "key": key,
-        "value": value,
-    }
-
-
-@app.delete("/spaces/{repo_id}/variables")
-async def delete_space_variable(
-    repo_id: str,
-    key: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "key": key,
-    }
-
-
-@app.get("/spaces/{repo_id}/runtime")
-async def get_space_runtime(
-    repo_id: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-    }
-
-
-@app.post("/spaces/{repo_id}/hardware")
-async def create_space_hardware(
-    repo_id: str,
-    hardware: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "hardware": hardware,
-    }
-
-
-@app.post("/spaces/{repo_id}/sleeptime")
-async def set_space_sleep_time(
-    repo_id: str,
-    seconds: int,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-        "seconds": seconds,
-    }
-
-
-@app.post("/spaces/{repo_id}/pause")
-async def pause_space(
-    repo_id: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-    }
-
-
-@app.post("/spaces/{repo_id}/restart")
-async def restart_space(
-    repo_id: str,
-    *,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "token": token,
-    }
-
-# TODO
-
-
 @app.post("/validate-yaml")
 async def validate_yaml(
     content: str,
@@ -584,3 +448,6 @@ async def check_repo_auth(
         "repo_type": repo_type,
         "token": token,
     }
+
+
+app.include_router(spaces.router)
