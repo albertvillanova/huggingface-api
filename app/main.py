@@ -9,17 +9,18 @@ from .routers import models
 from .routers import organizations
 from .routers import repos
 from .routers import spaces
+from .routers import tags
 from .routers import users
 from .routers import webhooks
 
 app = FastAPI()
 
 
-@app.get("/{repo_type}s-tags-by-type")
-async def list_repo_tags_by_type(
-    repo_type: str,
-):
-    return {"repo_type": repo_type}
+# @app.get("/{repo_type}s-tags-by-type")
+# async def list_repo_tags_by_type(
+#     repo_type: str,
+# ):
+#     return {"repo_type": repo_type}
 
 
 @app.post("/{repo_type}s/{repo_id}/like")
@@ -425,5 +426,6 @@ app.include_router(models.router)
 app.include_router(datasets.router)
 app.include_router(spaces.router)
 app.include_router(metrics.router)
+app.include_router(tags.router)
 app.include_router(collections.router)
 app.include_router(webhooks.router)
