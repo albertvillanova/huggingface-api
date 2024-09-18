@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional, Union
 
 from fastapi import APIRouter
 
@@ -151,4 +151,42 @@ async def restart_space(
         "token": token,
     }
 
-# TODO
+
+@router.post("/{from_repo_id}/duplicate")
+async def duplicate_space(
+    from_repo_id: str,
+    to_repo_id: Optional[str] = None,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "from_repo_id": from_repo_id,
+        "to_repo_id": to_repo_id,
+        "token": token,
+    }
+
+
+@router.post("/{repo_id}/storage")
+async def set_space_storage(
+    repo_id: str,
+    storage: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+        "storage": storage,
+    }
+
+
+@router.delete("/{repo_id}/storage")
+async def delete_space_storage(
+    repo_id: str,
+    *,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
