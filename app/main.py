@@ -12,6 +12,7 @@ from .routers import repos
 from .routers import spaces
 from .routers import tags
 from .routers import users
+from .routers import user_access
 from .routers import webhooks
 
 app = FastAPI()
@@ -188,65 +189,16 @@ async def check_repo_auth(
     }
 
 
-@app.get("/{repo_type}s/{repo_id}/user-access-request/{status}")
-async def list_user_access_requests(
-    repo_id: str,
-    status: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "status": status,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/user-access-request/handle")
-async def handle_user_access_request(
-    repo_id: str,
-    user_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    status: Optional[str] = None,
-    message: Optional[str] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "user_id": user_id,
-        "repo_type": repo_type,
-        "token": token,
-        "status": status,
-        "message": message,
-    }
-
-
-@app.post("/models/{repo_id}/user-access-request/grant")
-async def grant_user_access(
-    repo_id: str,
-    user_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "user_id": user_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
 app.include_router(users.router)
 app.include_router(organizations.router)
 app.include_router(repos.router)
+# /{repo_type}s/
 app.include_router(models.router)
 app.include_router(datasets.router)
 app.include_router(spaces.router)
 app.include_router(git_commands.router)
+app.include_router(user_access.router)
+#
 app.include_router(metrics.router)
 app.include_router(tags.router)
 app.include_router(collections.router)
