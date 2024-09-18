@@ -2,6 +2,7 @@ from typing import Optional, Union
 
 from fastapi import FastAPI
 
+from .routers import activity
 from .routers import collections
 from .routers import datasets
 from .routers import git_commands
@@ -23,48 +24,6 @@ app = FastAPI()
 #     repo_type: str,
 # ):
 #     return {"repo_type": repo_type}
-
-
-@app.post("/{repo_type}s/{repo_id}/like")
-async def like_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
-@app.delete("/{repo_type}s/{repo_id}/like")
-async def unlike_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
-@app.get("{repo_type}s/{repo_id}/likers")
-async def list_repo_likers(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
 
 
 # @app.get("/{repo_type}s/{repo_id}")
@@ -197,6 +156,7 @@ app.include_router(models.router)
 app.include_router(datasets.router)
 app.include_router(spaces.router)
 app.include_router(git_commands.router)
+app.include_router(activity.router)
 app.include_router(user_access.router)
 #
 app.include_router(metrics.router)
