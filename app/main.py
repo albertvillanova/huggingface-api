@@ -3,6 +3,7 @@ from typing import Optional, Union
 from fastapi import FastAPI
 
 from .routers import collections
+from .routers import repos
 from .routers import spaces
 
 app = FastAPI()
@@ -195,40 +196,6 @@ async def super_squash(
     }
 
 
-@app.post("/repos/create")
-async def create_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    exist_ok: bool = False,
-    private: bool = False,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-        "exist_ok": exist_ok,
-        "private": private,
-    }
-
-
-@app.delete("/repos/delete")
-async def delete_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    missing_ok: bool = False,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-        "missing_ok": missing_ok,
-    }
-
-
 @app.put("/{repo_type}s/{repo_id}/settings")
 async def update_repo_settings(
     repo_id: str,
@@ -242,21 +209,6 @@ async def update_repo_settings(
         "token": token,
     }
 
-
-@app.post("/repos/move")
-async def move_repo(
-    from_repo_id: str,
-    to_repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "from_repo_id": from_repo_id,
-        "to_repo_id": to_repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
 
 @app.post("/{repo_type}s/{repo_id}/commit/{revision}")
 async def commit_repo(
@@ -444,5 +396,6 @@ async def check_repo_auth(
     }
 
 
+app.include_router(repos.router)
 app.include_router(spaces.router)
 app.include_router(collections.router)
