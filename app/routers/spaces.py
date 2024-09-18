@@ -16,6 +16,30 @@ async def list_spaces(
     return {"token": token}
 
 
+@router.get("/{repo_id}")
+async def get_space_info(
+    repo_id: str,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+
+@router.get("/{repo_id}/revision/{revision}")
+async def get_space_info_at_revision(
+    repo_id: str,
+    revision: str,
+    token: Union[str, bool, None] = None,
+):
+    return {
+        "repo_id": repo_id,
+        "revision": revision,
+        "token": token,
+    }
+
+
 @router.post("/{repo_id}/secrets")
 async def create_space_secret(
     repo_id: str,

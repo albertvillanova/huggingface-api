@@ -64,18 +64,18 @@ async def list_repo_likers(
     }
 
 
-@app.get("/{repo_type}s/{repo_id}")
-async def read_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
+# @app.get("/{repo_type}s/{repo_id}")
+# async def read_repo(
+#     repo_id: str,
+#     *,
+#     repo_type: Optional[str] = None,
+#     token: Union[str, bool, None] = None,
+# ):
+#     return {
+#         "repo_id": repo_id,
+#         "repo_type": repo_type,
+#         "token": token,
+#     }
 
 
 @app.get("/{repo_type}s/{repo_id}/commits/{revision}")
