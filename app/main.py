@@ -42,13 +42,6 @@ async def list_metrics(
     return {"token": token}
 
 
-@app.get("/spaces")
-async def list_spaces(
-    token: Union[str, bool, None] = None,
-):
-    return {"token": token}
-
-
 @app.post("/{repo_type}s/{repo_id}/like")
 async def like_repo(
     repo_id: str,

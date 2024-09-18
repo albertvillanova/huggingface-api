@@ -9,6 +9,13 @@ router = APIRouter(
 )
 
 
+@router.get("")
+async def list_spaces(
+    token: Union[str, bool, None] = None,
+):
+    return {"token": token}
+
+
 @router.post("/{repo_id}/secrets")
 async def create_space_secret(
     repo_id: str,
