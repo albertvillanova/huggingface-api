@@ -10,6 +10,7 @@ from .routers import organizations
 from .routers import repos
 from .routers import spaces
 from .routers import users
+from .routers import webhooks
 
 app = FastAPI()
 
@@ -373,3 +374,4 @@ app.include_router(datasets.router)
 app.include_router(spaces.router)
 app.include_router(metrics.router)
 app.include_router(collections.router)
+app.include_router(webhooks.router)
