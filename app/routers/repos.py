@@ -57,3 +57,18 @@ async def move_repo(
         "repo_type": repo_type,
         "token": token,
     }
+
+
+# # TODO: See: https://huggingface.co/docs/hub/api#put-apireposrepotyperepoidsettings
+# @router.put("/{repo_type}/{repo_id}/settings")  # Not: /{repo_type}s/
+# async def update_repo_settings(
+#     repo_id: str,
+#     *,
+#     repo_type: Optional[str] = None,
+#     token: Union[str, bool, None] = None,
+# ):
+#     return {
+#         "repo_id": repo_id,
+#         "repo_type": repo_type,
+#         "token": token,
+#     }
