@@ -45,8 +45,7 @@ async def handle_user_access_request(
     }
 
 
-# TODO: Why /models/?
-@router.post("/models/{repo_id}/user-access-request/grant")
+@router.post("/{repo_type}s/{repo_id}/user-access-request/grant")
 async def grant_user_access(
     repo_id: str,
     user_id: str,
