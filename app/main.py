@@ -8,15 +8,9 @@ from .routers import metrics
 from .routers import models
 from .routers import repos
 from .routers import spaces
+from .routers import users
 
 app = FastAPI()
-
-
-@app.get("/whoami-v2")
-async def whoami(
-    token: Union[bool, str, None] = None,
-):
-    return {"token": token}
 
 
 @app.get("/{repo_type}s-tags-by-type")
@@ -54,15 +48,7 @@ async def unlike_repo(
     }
 
 
-app.get("/users/{user}/likes")
-async def list_user_likes(
-    user: str,
-    token: Union[str, bool, None] = None,
-):
-    return {"user": user, "token": token}
-
-
-app.get("{repo_type}s/{repo_id}/likers")
+@app.get("{repo_type}s/{repo_id}/likers")
 async def list_repo_likers(
     repo_id: str,
     *,
@@ -378,6 +364,7 @@ async def check_repo_auth(
     }
 
 
+app.include_router(users.router)
 app.include_router(repos.router)
 app.include_router(models.router)
 app.include_router(datasets.router)
