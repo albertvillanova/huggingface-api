@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from .routers import collections
 from .routers import datasets
+from .routers import git_commands
 from .routers import metrics
 from .routers import models
 from .routers import organizations
@@ -79,94 +80,6 @@ async def list_repo_likers(
 #     }
 
 
-@app.get("/{repo_type}s/{repo_id}/commits/{revision}")
-async def list_repo_commits(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[bool, str, None] = None,
-    revision: Optional[str] = None,
-    formatted: bool = False,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-        "revision": revision,
-        "formatted": formatted,
-    }
-
-
-@app.get("/{repo_type}s/{repo_id}/refs")
-async def list_repo_refs(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    include_pull_requests: bool = False,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "include_pull_requests": include_pull_requests,
-        "token": token,
-    }
-
-
-@app.get("/{repo_type}s/{repo_id}/tree/{revision}{path_in_repo}")
-async def list_repo_tree(
-    repo_id: str,
-    path_in_repo: Optional[str] = None,
-    *,
-    recursive: bool = False,
-    expand: bool = False,
-    revision: Optional[str] = None,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "path_in_repo": path_in_repo,
-        "recursive": recursive,
-        "expand": expand,
-        "revision": revision,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/paths-info/{revision}")
-async def list_repo_paths_info(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    revision: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "revision": revision,
-        "token": token,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/super-squash/{branch}")
-async def super_squash(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    branch: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "branch": branch,
-        "token": token,
-    }
-
-
 @app.put("/{repo_type}s/{repo_id}/settings")
 async def update_repo_settings(
     repo_id: str,
@@ -176,98 +89,6 @@ async def update_repo_settings(
 ):
     return {
         "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/commit/{revision}")
-async def commit_repo(
-    repo_id: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    revision: Optional[str] = None,
-    message: Optional[str] = None,
-    description: Optional[str] = None,
-    create_pr: Optional[bool] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "repo_type": repo_type,
-        "token": token,
-        "revision": revision,
-        "message": message,
-        "description": description,
-        "create_pr": create_pr,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/branch/{branch}")
-async def create_branch(
-    repo_id: str,
-    branch: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    exist_ok: bool = False,
-):
-    return {
-        "repo_id": repo_id,
-        "branch": branch,
-        "repo_type": repo_type,
-        "token": token,
-        "exist_ok": exist_ok,
-    }
-
-
-@app.delete("/{repo_type}s/{repo_id}/branch/{branch}")
-async def delete_branch(
-    repo_id: str,
-    branch: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-    # missing_ok: bool = False,
-):
-    return {
-        "repo_id": repo_id,
-        "branch": branch,
-        "repo_type": repo_type,
-        "token": token,
-        # "missing_ok": missing_ok,
-    }
-
-
-@app.post("/{repo_type}s/{repo_id}/tag/{revision}")
-async def create_tag(
-    repo_id: str,
-    revision: str,
-    tag: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "revision": revision,
-        "repo_type": repo_type,
-        "token": token,
-        "tag": tag,
-    }
-
-
-@app.delete("/{repo_type}s/{repo_id}/tag/{tag}")
-async def delete_tag(
-    repo_id: str,
-    tag: str,
-    *,
-    repo_type: Optional[str] = None,
-    token: Union[str, bool, None] = None,
-):
-    return {
-        "repo_id": repo_id,
-        "tag": tag,
         "repo_type": repo_type,
         "token": token,
     }
@@ -425,6 +246,7 @@ app.include_router(repos.router)
 app.include_router(models.router)
 app.include_router(datasets.router)
 app.include_router(spaces.router)
+app.include_router(git_commands.router)
 app.include_router(metrics.router)
 app.include_router(tags.router)
 app.include_router(collections.router)
