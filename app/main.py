@@ -14,7 +14,7 @@ from .routers import repos
 from .routers import spaces
 from .routers import tags
 from .routers import users
-from .routers import user_access
+from .routers import user_access_requests
 from .routers import webhooks
 
 app = FastAPI()
@@ -93,7 +93,7 @@ app.include_router(spaces.router)
 app.include_router(git_commands.router)
 app.include_router(discussions.router)
 app.include_router(likes.router)
-app.include_router(user_access.router)
+app.include_router(user_access_requests.router)
 #
 app.include_router(metrics.router)
 app.include_router(tags.router)

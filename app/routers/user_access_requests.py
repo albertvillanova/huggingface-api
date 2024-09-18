@@ -4,8 +4,8 @@ from fastapi import APIRouter
 
 
 router = APIRouter(
-    # prefix="/user-access",
-    tags=["user-access"],
+    # prefix="/user-access-requests",
+    tags=["user-access-requests"],
 )
 
 
