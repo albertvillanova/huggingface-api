@@ -2,6 +2,7 @@ from typing import Optional, Union
 
 from fastapi import FastAPI
 
+from .routers import collections
 from .routers import spaces
 
 app = FastAPI()
@@ -444,3 +445,4 @@ async def check_repo_auth(
 
 
 app.include_router(spaces.router)
+app.include_router(collections.router)
