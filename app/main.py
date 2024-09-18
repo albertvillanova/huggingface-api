@@ -3,6 +3,7 @@ from typing import Optional, Union
 from fastapi import FastAPI
 
 from .routers import collections
+from .routers import models
 from .routers import repos
 from .routers import spaces
 
@@ -21,13 +22,6 @@ async def list_repo_tags_by_type(
     repo_type: str,
 ):
     return {"repo_type": repo_type}
-
-
-@app.get("/models")
-async def list_models(
-    token: Union[str, bool, None] = None,
-):
-    return {"token": token}
 
 
 @app.get("/datasets")
@@ -397,5 +391,6 @@ async def check_repo_auth(
 
 
 app.include_router(repos.router)
+app.include_router(models.router)
 app.include_router(spaces.router)
 app.include_router(collections.router)
