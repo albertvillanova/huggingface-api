@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from .routers import collections
 from .routers import datasets
+from .routers import metrics
 from .routers import models
 from .routers import repos
 from .routers import spaces
@@ -23,13 +24,6 @@ async def list_repo_tags_by_type(
     repo_type: str,
 ):
     return {"repo_type": repo_type}
-
-
-@app.get("/metrics")
-async def list_metrics(
-    token: Union[str, bool, None] = None,
-):
-    return {"token": token}
 
 
 @app.post("/{repo_type}s/{repo_id}/like")
@@ -388,4 +382,5 @@ app.include_router(repos.router)
 app.include_router(models.router)
 app.include_router(datasets.router)
 app.include_router(spaces.router)
+app.include_router(metrics.router)
 app.include_router(collections.router)
