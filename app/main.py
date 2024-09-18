@@ -6,6 +6,7 @@ from .routers import collections
 from .routers import datasets
 from .routers import metrics
 from .routers import models
+from .routers import organizations
 from .routers import repos
 from .routers import spaces
 from .routers import users
@@ -365,6 +366,7 @@ async def check_repo_auth(
 
 
 app.include_router(users.router)
+app.include_router(organizations.router)
 app.include_router(repos.router)
 app.include_router(models.router)
 app.include_router(datasets.router)
