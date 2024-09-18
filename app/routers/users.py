@@ -16,9 +16,33 @@ async def whoami(
     return {"token": token}
 
 
-@router.get("/users/{user}/likes")
-async def list_user_likes(
-    user: str,
+@router.get("/users/{user_id}/overview")
+async def get_user_overview(
+    user_id: str,
     token: Union[str, bool, None] = None,
 ):
-    return {"user": user, "token": token}
+    return {"user_id": user_id, "token": token}
+
+
+@router.get("/users/{user_id}/likes")
+async def list_user_likes(
+    user_id: str,
+    token: Union[str, bool, None] = None,
+):
+    return {"user_id": user_id, "token": token}
+
+
+@router.get("/users/{user_id}/followers")
+async def list_user_followers(
+    user_id: str,
+    token: Union[str, bool, None] = None,
+):
+    return {"user_id": user_id, "token": token}
+
+
+@router.get("/users/{user_id}/following")
+async def list_user_following(
+    user_id: str,
+    token: Union[str, bool, None] = None,
+):
+    return {"user_id": user_id, "token": token}
