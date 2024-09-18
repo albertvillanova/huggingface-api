@@ -2,11 +2,11 @@ from typing import Optional, Union
 
 from fastapi import FastAPI
 
-from .routers import activity
 from .routers import collections
 from .routers import datasets
 from .routers import discussions
 from .routers import git_commands
+from .routers import likes
 from .routers import metrics
 from .routers import models
 from .routers import organizations
@@ -92,7 +92,7 @@ app.include_router(datasets.router)
 app.include_router(spaces.router)
 app.include_router(git_commands.router)
 app.include_router(discussions.router)
-app.include_router(activity.router)
+app.include_router(likes.router)
 app.include_router(user_access.router)
 #
 app.include_router(metrics.router)
