@@ -1,6 +1,9 @@
-from typing import Optional, Union
+from typing import Annotated, Union
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi.security import HTTPAuthorizationCredentials
+
+from ..dependencies import security
 
 
 router = APIRouter(
@@ -11,8 +14,9 @@ router = APIRouter(
 
 @router.get("/whoami-v2")
 async def whoami(
-    token: Union[bool, str, None] = None,
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
 ):
+    token = credentials.credentials if credentials else None
     return {"token": token}
 
 
