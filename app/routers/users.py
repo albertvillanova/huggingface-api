@@ -1,9 +1,8 @@
 from typing import Annotated, Union
 
 from fastapi import APIRouter, Depends
-from fastapi.security import HTTPAuthorizationCredentials
 
-from ..dependencies import security
+from ..dependencies import build_authorization_headers
 
 
 router = APIRouter(
@@ -14,10 +13,9 @@ router = APIRouter(
 
 @router.get("/whoami-v2")
 async def whoami(
-    credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
+    headers: Annotated[dict, Depends(build_authorization_headers)],
 ):
-    token = credentials.credentials if credentials else None
-    return {"token": token}
+    return {"headers": headers}
 
 
 @router.get("/users/{user_id}/overview")
